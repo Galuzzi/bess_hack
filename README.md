@@ -15,6 +15,8 @@ To support your solution, MaxxWatt provides a set of realistic mock datasets rep
 
 Data is organized by asset and type, and includes physical signals (e.g. temperature, voltage), performance indicators (e.g. SOC, SOH), and environmental data. The files are in CSV format, with timestamps and sensor values.
 
+Use this link for direct data access: http://maxxwatt-hackathon-datasets.s3-website.eu-central-1.amazonaws.com
+
 ---
 
 ## 📁 Directory Overview
