@@ -37,6 +37,6 @@ def simulate_stream_from_s3(bucket_name, object_key, delay=1.0):
 if __name__ == "__main__":
     simulate_stream_from_s3(
         bucket_name="maxxwatt-hackathon-datasets",
-        object_key="BESS/ZHPESS232A230002/bms1_soc.csv",
+        object_key="energy_hackathon_data/BESS/ZHPESS232A230002/bms1_soc.csv",
         delay=1.0  # 1 second per row
     )
