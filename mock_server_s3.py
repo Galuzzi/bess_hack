@@ -18,7 +18,7 @@ class SOCReading(BaseModel):
 
 @app.get("/cloud/BESS/{device_id}/soc", response_model=List[SOCReading])
 def get_soc_s3(device_id: str):
-    key = f"BESS/{device_id}/bms1_soc.csv"
+    key = f"energy_hackathon_data/BESS/{device_id}/bms1_soc.csv"
     try:
         obj = s3.get_object(Bucket=S3_BUCKET, Key=key)
         content = obj['Body'].read()
