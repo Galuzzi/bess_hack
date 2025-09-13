@@ -1,10 +1,8 @@
 import pandas as pd
-import pvlib
 from pvlib.location import Location
 from pvlib.pvsystem import PVSystem
 from pvlib.modelchain import ModelChain
 
-import plotly.express as px
 
 # Standort Prüm
 location = Location(50.2089, 6.4227, 'Europe/Berlin')
@@ -214,7 +212,7 @@ total_pv_kwh = (combined["pv"] * interval_hours).sum()
 ev_quote_batt = ev_batt_kwh / total_pv_kwh
 autarkie_batt = (combined["load"].sum() - combined["grid_import_with_batt"].sum()) / combined["load"].sum()
 
-print(f"\n🔋 MIT Batterie:")
+print("\n🔋 MIT Batterie:")
 print(f"   - Eigenverbrauchsquote: {ev_quote_batt:.1%}")
 print(f"   - Autarkiegrad:         {autarkie_batt:.1%}")
 print(f"   - Geladene Batterie-Energie: {combined['battery_charge'].sum():.1f} kWh")
@@ -238,7 +236,7 @@ print(f"🔍 Anteil der zusätzlichen PV-Nutzung durch Batterie: {(additional_se
 ev_quote = combined["used_pv"].sum() / combined["pv"].sum()
 autarkie = combined["used_pv"].sum() / combined["load"].sum()
 
-print(f"\n OHNE Batterie:")
+print("\n OHNE Batterie:")
 print(f"🔋 Eigenverbrauchsquote: {ev_quote:.1%}")
 print(f"🏠 Autarkiegrad: {autarkie:.1%}")
 
@@ -259,7 +257,7 @@ new_peak = combined["grid_import_with_batt"].max()
 leistungspreis = 166.03
 savings_ps = (after_pv_peak - new_peak) * leistungspreis
 
-print(f"\n📊 Zweistufige Optimierung (Eigenverbrauchsoptimierung ➜ Peak Shaving):")
+print("\n📊 Zweistufige Optimierung (Eigenverbrauchsoptimierung ➜ Peak Shaving):")
 print(f"🔼 Urspr\u00fcngliche Lastspitze:         {original_peak:.1f} kW")
 print(f"Lastspitze nach PV: {after_pv_peak:.1f} kW")
 print(f"🔽 Lastspitze nach PV + Batterie:    {new_peak:.1f} kW")
