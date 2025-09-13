@@ -5,28 +5,36 @@ import io
 from datetime import datetime
 import os
 
+# NEW imports for unsigned access
+from botocore import UNSIGNED
+from botocore.client import Config
+
 def simulate_stream_from_s3(bucket_name, object_key, delay=1.0):
-    s3 = boto3.client('s3')
+    # Unsigned S3 client (no credentials needed for public buckets)
+    s3 = boto3.client("s3", config=Config(signature_version=UNSIGNED))
+
     metric = os.path.splitext(os.path.basename(object_key))[0]
-    
+
     try:
         # Load object from S3
         obj = s3.get_object(Bucket=bucket_name, Key=object_key)
-        content = obj['Body'].read()
+        content = obj["Body"].read()
 
         # Read as DataFrame
         df = pd.read_csv(io.BytesIO(content))
 
-        if 'ts' in df.columns:
-            df['ts'] = pd.to_datetime(df['ts'])
+        # Ensure timestamps exist
+        if "ts" in df.columns:
+            df["ts"] = pd.to_datetime(df["ts"])
         else:
             now = datetime.utcnow()
-            df['ts'] = [now + pd.Timedelta(seconds=i) for i in range(len(df))]
+            df["ts"] = [now + pd.Timedelta(seconds=i) for i in range(len(df))]
 
+        # Simulate row-by-row stream
         for _, row in df.iterrows():
             data = {
-                "timestamp": row['ts'].isoformat(),
-                "value": row.get(metric, 0)
+                "timestamp": row["ts"].isoformat(),
+                "value": row.get(metric, 0),
             }
             print(data)
             time.sleep(delay)
@@ -38,5 +46,5 @@ if __name__ == "__main__":
     simulate_stream_from_s3(
         bucket_name="maxxwatt-hackathon-datasets",
         object_key="energy_hackathon_data/BESS/ZHPESS232A230002/bms1_soc.csv",
-        delay=1.0  # 1 second per row
+        delay=1.0,  # 1 second per row
     )
