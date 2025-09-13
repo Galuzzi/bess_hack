@@ -81,9 +81,14 @@ def optimize_simple_model(market_price_series, add_battery=True, **kwarg):
     
     # View results
     state_of_charge = n.storage_units_t.state_of_charge["BESS"]
-    system_cost = n.objective / 1e6 # Mil €/a
 
-    return state_of_charge, system_cost
+    # Power rate of batteries (MW)
+    battery_power = n.storage_units_t.p["BESS"]
+    
+    # Revenue time series (€/h) from discharging
+    battery_revenue = battery_power * market_price_series
+
+    return state_of_charge, battery_revenue
 
 def simulate_myopic_optimization(market_price, years, date, **kwarg):
     """
@@ -114,7 +119,7 @@ def simulate_myopic_optimization(market_price, years, date, **kwarg):
     week_ahead = current_date + pd.Timedelta(days=7)
 
     state_of_charge = pd.DataFrame()
-    system_cost = {}
+    battery_revenue = pd.DataFrame()
     
     for year in years:
         # Extract relevant slices
@@ -124,14 +129,15 @@ def simulate_myopic_optimization(market_price, years, date, **kwarg):
         # Combine them into one consistent Series
         market_price_series = pd.concat([recent_prices, future_prices]).sort_index()
         
-        state_of_charge_year, system_cost_year = optimize_simple_model(market_price_series, **kwarg)
+        state_of_charge_year, battery_revenue_year = optimize_simple_model(market_price_series, **kwarg)
 
         state_of_charge = pd.concat([state_of_charge, state_of_charge_year], axis=1)
-        system_cost[year] = system_cost_year
+        battery_revenue = pd.concat([battery_revenue, battery_revenue_year], axis=1)
 
-    return state_of_charge, system_cost
+    return state_of_charge, battery_revenue
 
-def plot_soc_forecast(state_of_charge, date):
+
+def plot_soc_forecast(df, date, name, unit="MWh"):
     """
     Plots the forecasted state of charge (SoC) distribution over a 7-day window, 
     starting from a given date, using quantile shading to represent uncertainty 
@@ -144,10 +150,12 @@ def plot_soc_forecast(state_of_charge, date):
     - Labels, grid, and a saved PNG file of the plot.
 
     Parameters:
-        state_of_charge (pandas.DataFrame): DataFrame where each column represents 
+        df (pandas.DataFrame): DataFrame where each column represents 
                                              a simulation scenario, and the index is a datetime.
         date (str or pd.Timestamp): The starting date for the 7-day forecast window 
                                     (e.g., '2025-07-01').
+        unit : str, optional (default = "€")
+            The unit of measurement, displayed on the y-axis label.
 
     Returns:
         None. (Displays and saves the plot as 'state_of_charge_plot.png'.)
@@ -158,31 +166,31 @@ def plot_soc_forecast(state_of_charge, date):
     week_ahead = current_date + pd.Timedelta(days=7)
 
     # Cut the time series only for the next week
-    state_of_charge = state_of_charge[current_date:week_ahead]
+    df = df[current_date:week_ahead]
 
     # Calculate percentiles across columns for each timestamp
-    q_0 = state_of_charge.min(axis=1)  # or .quantile(0.0)
-    q_25 = state_of_charge.quantile(0.25, axis=1)
-    q_37 = state_of_charge.quantile(0.375, axis=1)
-    q_50 = state_of_charge.median(axis=1)
-    q_62 = state_of_charge.quantile(0.625, axis=1)
-    q_75 = state_of_charge.quantile(0.75, axis=1)
-    q_100 = state_of_charge.max(axis=1)  # or .quantile(1.0)
+    q_0 = df.min(axis=1)  # or .quantile(0.0)
+    q_25 = df.quantile(0.25, axis=1)
+    q_37 = df.quantile(0.375, axis=1)
+    q_50 = df.median(axis=1)
+    q_62 = df.quantile(0.625, axis=1)
+    q_75 = df.quantile(0.75, axis=1)
+    q_100 = df.max(axis=1)  # or .quantile(1.0)
 
     # Start plotting
     plt.figure(figsize=(14, 6))
 
     # Lightest area: min to max (0–100%)
-    plt.fill_between(state_of_charge.index, q_0, q_100, color='black', alpha=0.2, label='0–100% range')
+    plt.fill_between(df.index, q_0, q_100, color='black', alpha=0.2, label='0–100% range')
 
     # Medium area: 25–75%
-    plt.fill_between(state_of_charge.index, q_25, q_75, color='black', alpha=0.4, label='25–75% range')
+    plt.fill_between(df.index, q_25, q_75, color='black', alpha=0.4, label='25–75% range')
 
     # Darkest area: 37.5–62.5%
-    plt.fill_between(state_of_charge.index, q_37, q_62, color='black', alpha=0.6, label='37.5–62.5% range')
+    plt.fill_between(df.index, q_37, q_62, color='black', alpha=0.6, label='37.5–62.5% range')
 
     # median line
-    plt.plot(state_of_charge.index, q_50, color='blue', linestyle='-', linewidth=2, label='Median SoC')
+    plt.plot(df.index, q_50, color='blue', linestyle='-', linewidth=2, label='Median SoC')
 
     # Day-ahead market
     
@@ -198,14 +206,122 @@ def plot_soc_forecast(state_of_charge, date):
     )
 
     # Formatting
-    plt.title("State of Charge Quantile Ranges")
+    plt.title(f"{name} Quantile Ranges")
     plt.xlabel("Time")
-    plt.xlim(state_of_charge.index.min(), state_of_charge.index.max())
-    plt.ylabel("State of Charge (MWh)")
+    plt.xlim(df.index.min(), df.index.max())
+    plt.ylabel(f"{name} ({unit})")
+    #plt.ylim(0, 100)
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
-    plt.savefig("state_of_charge_plot.png", dpi=300)  # Save to file
+    plt.savefig(f"{name}_plot.png", dpi=300)  # Save to file
+    plt.show()
+
+def plot_revenue_forecast(df, date, name, unit="€"):
+    """
+    Plots weekly revenue forecast vs. realized revenue for a battery system.
+
+    This function takes a time series DataFrame of battery revenue simulations 
+    (e.g., from multiple year scenarios), slices the data to 1 month before and 
+    after a specified `date`, aggregates it weekly, and plots the 25–75% quantile 
+    range as forecast bars. It also includes realized revenue data for the historical period.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        A DataFrame with datetime index and revenue simulations as columns.
+    
+    date : str or pd.Timestamp
+        The reference date (typically the current date). The plot will show 
+        one month before and after this date.
+    
+    name : str
+        The name of the metric being plotted (e.g., "Battery Revenue").
+        This is used in the plot title and y-axis label.
+    
+    unit : str, optional (default = "€")
+        The unit of measurement, displayed on the y-axis label.
+
+    Output:
+    -------
+    - A bar plot showing:
+        * Historical realized revenue (approx. 25% quantile) in orange
+        * Forecast revenue range (25–75% quantile) in green/light green
+    - X-axis labeled by ISO week number (1–52)
+    - Plot saved as "Battery Revenue_plot.png"
+    """
+    
+    # Convert and define date ranges
+    current_date = pd.to_datetime(date)
+    month_ahead = current_date + pd.DateOffset(months=1)
+    month_behind = current_date - pd.DateOffset(months=1)
+    
+    # Slice the DataFrame for 1 month before and after
+    df = df[month_behind:month_ahead]
+    
+    # Ensure datetime index
+    df.index = pd.to_datetime(df.index)
+    
+    # Resample weekly
+    df_weekly = df.resample("W").sum()
+    
+    # Compute quantiles across columns for each week
+    q_25 = df_weekly.quantile(0.25, axis=1)
+    q_75 = df_weekly.quantile(0.75, axis=1)
+    iqr = q_75 - q_25
+    
+    # Split into historical and forecast periods
+    historical_mask = (q_25.index >= month_behind) & (q_25.index < current_date)
+    forecast_mask = (q_25.index >= current_date) & (q_25.index <= month_ahead)
+    
+    # Extract week numbers from datetime index
+    week_numbers = q_25.index.isocalendar().week
+    
+    # Plot
+    plt.figure(figsize=(14, 6))
+    
+    # Forecast bars (Max Revenue - stacked on Min)
+    plt.bar(
+        week_numbers[forecast_mask],
+        iqr[forecast_mask],
+        bottom=q_25[forecast_mask],
+        width=0.8,
+        color='lightgreen',
+        alpha=1.0,
+        label='Forecast Revenue (75% Quantile)'
+    )
+    
+    # Forecast bars (Min Revenue)
+    plt.bar(
+        week_numbers[forecast_mask],
+        q_25[forecast_mask],
+        bottom=0,
+        width=0.8,
+        color='green',
+        alpha=1.0,
+        label='Forecast Revenue (25% Quantile)'
+    )
+    
+    # Historical bars
+    plt.bar(
+        week_numbers[historical_mask],
+        q_25[historical_mask],
+        bottom=0,
+        width=0.8,
+        color='orange',
+        alpha=1.0,
+        label='Realized Revenue'
+    )
+    
+    # Formatting
+    plt.title(f"Weekly {name}: Realized vs Forecast (25–75% Range)")
+    plt.xlabel("Week Number")
+    plt.ylabel(f"{name} ({unit})")
+    plt.grid(True, linestyle='--', alpha=0.5)
+    plt.legend()
+    plt.xticks(week_numbers, week_numbers)  # Set week numbers as tick labels
+    plt.tight_layout()
+    plt.savefig(f"{name}_plot.png", dpi=300)  # Save to file
     plt.show()
 
 if __name__ == "__main__":
@@ -228,15 +344,15 @@ if __name__ == "__main__":
     # We want to connect this date selection to the frontend. The maximul limit for this date is 2025-09-05
     date = "2025-09-01"
 
-    state_of_charge, system_cost = simulate_myopic_optimization(
+    state_of_charge, battery_revenue = simulate_myopic_optimization(
         market_price, 
         years, 
         date, 
         **kwarg
     )
 
-    # system_cost are currently not in use. Just for testing.
-
     state_of_charge.to_csv("forecast_soc/state_of_charge.csv")
+    battery_revenue.to_csv("forecast_soc/battery_renevue.csv")
 
-    plot_soc_forecast(state_of_charge, date)
+    plot_soc_forecast(state_of_charge, date, "State of Charge", "MWh")
+    plot_revenue_forecast(battery_revenue, date, "Battery Revenue", "€")
