@@ -13,10 +13,16 @@ from pathlib import Path
 from typing import List, Tuple, Optional
 import pandas as pd
 import argparse
-import multiprocessing as mp
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import time
 from functools import partial
+
+
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(
@@ -31,11 +37,11 @@ logger = logging.getLogger(__name__)
 
 class DatabaseConfig(BaseModel):
     """Database configuration for TimescaleDB connection"""
-    host: str = Field(default="n932lqdpkf.iw7envwgqa.tsdb.cloud.timescale.com")
-    port: int = Field(default=35475)
-    database: str = Field(default="tsdb")
-    username: str = Field(default="tsdbadmin")
-    password: str = Field(default="vvlzdfgnlbroz5u1")
+    host: str = Field(default=os.getenv("TIMESCALEDB_HOST"))
+    port: int = Field(default=int(os.getenv("TIMESCALEDB_PORT", "35475")))
+    database: str = Field(default=os.getenv("TIMESCALEDB_DB"))
+    username: str = Field(default=os.getenv("TIMESCALEDB_USER"))
+    password: str = Field(default=os.getenv("TIMESCALEDB_PASSWORD"))
     
     def get_connection_string(self) -> str:
         return f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}?sslmode=require"
@@ -602,11 +608,11 @@ class BESSDataIngester:
 
 def main():
     parser = argparse.ArgumentParser(description='Ingest BESS CSV data into TimescaleDB')
-    parser.add_argument('--host', default='n932lqdpkf.iw7envwgqa.tsdb.cloud.timescale.com', help='Database host')
-    parser.add_argument('--port', type=int, default=35475, help='Database port')
-    parser.add_argument('--database', default='tsdb', help='Database name')
-    parser.add_argument('--username', default='tsdbadmin', help='Database username')
-    parser.add_argument('--password', default='vvlzdfgnlbroz5u1', help='Database password')
+    parser.add_argument('--host', default=os.getenv("TIMESCALEDB_HOST"), help='Database host')
+    parser.add_argument('--port', type=int, default=int(os.getenv("TIMESCALEDB_PORT", "35475")), help='Database port')
+    parser.add_argument('--database', default=os.getenv("TIMESCALEDB_DB"), help='Database name')
+    parser.add_argument('--username', default=os.getenv("TIMESCALEDB_USER"), help='Database username')
+    parser.add_argument('--password', default=os.getenv("TIMESCALEDB_PASSWORD"), help='Database password')
     parser.add_argument('--data-dir', required=True, help='Root directory containing BESS system folders')
     parser.add_argument('--setup-db', action='store_true', help='Setup database schema')
     parser.add_argument('--use-copy', action='store_true', help='Use COPY method for faster bulk inserts')

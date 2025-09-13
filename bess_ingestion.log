@@ -292,3 +292,11 @@ LINE 1: SELECT system_id FROM bess_systems WHERE system_name = $1;
 2025-09-13 17:41:36,653 - WARNING - Unknown metric file: fa5_Co.csv
 2025-09-13 17:43:43,386 - WARNING - Unknown metric file: fa1_T1.csv
 2025-09-13 17:45:09,239 - WARNING - Unknown metric file: fa1_SmokeFlag.csv
+2025-09-13 18:26:57,600 - ERROR - Failed to connect to database: connection failed: connection to server at "18.197.247.131", port 39117 failed: FATAL:  database "tsdb2" does not exist
+Multiple connection attempts failed. All failures were:
+- host: 'ro9on8kgxj.iw7envwgqa.tsdb.cloud.timescale.com', port: 39117, hostaddr: '54.93.245.12': connection failed: connection to server at "54.93.245.12", port 39117 failed: FATAL:  database "tsdb2" does not exist
+- host: 'ro9on8kgxj.iw7envwgqa.tsdb.cloud.timescale.com', port: 39117, hostaddr: '18.197.247.131': connection failed: connection to server at "18.197.247.131", port 39117 failed: FATAL:  database "tsdb2" does not exist
+2025-09-13 18:32:00,370 - ERROR - Failed to connect to database: [Errno -2] Name or service not known
+2025-09-13 18:39:36,813 - ERROR - Failed to connect to database: [Errno -2] Name or service not known
+2025-09-13 18:41:51,113 - ERROR - Failed to connect to database: [Errno -2] Name or service not known
+2025-09-13 18:49:13,717 - WARNING - Unknown metric file: bms1_pos_ins.csv

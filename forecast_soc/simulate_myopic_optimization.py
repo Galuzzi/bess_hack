@@ -116,7 +116,7 @@ def simulate_myopic_optimization(market_price, years, date, **kwarg):
 
     current_date = pd.to_datetime(date)
     day_ahead = current_date + pd.Timedelta(days=1)
-    week_ahead = current_date + pd.Timedelta(days=7)
+    current_date + pd.Timedelta(days=7)
 
     state_of_charge = pd.DataFrame()
     battery_revenue = pd.DataFrame()
