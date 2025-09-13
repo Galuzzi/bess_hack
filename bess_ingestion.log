@@ -1,0 +1,294 @@
+2025-09-13 12:41:05,865 - INFO - Connected to TimescaleDB at localhost:5432
+2025-09-13 12:41:05,865 - ERROR - Data ingestion failed: BaseModel.__init__() takes 1 positional argument but 6 were given
+2025-09-13 12:41:05,866 - INFO - Database connection closed
+2025-09-13 12:45:09,458 - INFO - Connected to TimescaleDB at localhost:5432
+2025-09-13 12:45:09,458 - INFO - Processing system: BESS-001
+2025-09-13 12:45:09,462 - ERROR - Failed to register system BESS-001: relation "bess_systems" does not exist
+LINE 2:         INSERT INTO bess_systems (system_name, location, cap...
+                            ^
+2025-09-13 12:45:09,463 - ERROR - Failed to get system_id for BESS-001: relation "bess_systems" does not exist
+LINE 1: SELECT system_id FROM bess_systems WHERE system_name = $1;
+                              ^
+2025-09-13 12:45:09,463 - ERROR - System BESS-001 not found in database
+2025-09-13 12:45:09,464 - INFO - Processing system: BESS-002
+2025-09-13 12:45:09,464 - ERROR - Failed to register system BESS-002: current transaction is aborted, commands ignored until end of transaction block
+2025-09-13 12:45:09,465 - ERROR - Failed to get system_id for BESS-002: relation "bess_systems" does not exist
+LINE 1: SELECT system_id FROM bess_systems WHERE system_name = $1;
+                              ^
+2025-09-13 12:45:09,465 - ERROR - System BESS-002 not found in database
+2025-09-13 12:45:09,466 - INFO - Processing system: BESS-003
+2025-09-13 12:45:09,466 - ERROR - Failed to register system BESS-003: current transaction is aborted, commands ignored until end of transaction block
+2025-09-13 12:45:09,467 - ERROR - Failed to get system_id for BESS-003: relation "bess_systems" does not exist
+LINE 1: SELECT system_id FROM bess_systems WHERE system_name = $1;
+                              ^
+2025-09-13 12:45:09,467 - ERROR - System BESS-003 not found in database
+2025-09-13 12:45:09,467 - INFO - Data ingestion completed successfully
+2025-09-13 12:45:09,467 - INFO - Database connection closed
+2025-09-13 12:48:50,724 - INFO - Connected to TimescaleDB at localhost:5432
+2025-09-13 12:48:50,724 - INFO - Setting up database schema...
+2025-09-13 12:48:50,745 - INFO - Database schema setup completed
+2025-09-13 12:48:50,745 - INFO - Processing system: BESS-001
+2025-09-13 12:48:50,748 - INFO - System BESS-001 registered
+2025-09-13 12:48:50,753 - INFO - Processing 597 CSV files for system BESS-001
+2025-09-13 12:48:50,754 - WARNING - Unknown metric file: bms1_p5_t37.csv
+2025-09-13 12:48:50,754 - WARNING - Unknown metric file: bms1_p5_t5.csv
+2025-09-13 12:48:50,754 - INFO - Processing pcs1_t_a.csv -> temp_ambient (PCS)
+2025-09-13 12:50:11,565 - INFO - Parsed 228202 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/pcs1_t_a.csv
+2025-09-13 12:50:37,267 - INFO - Bulk inserted 228202 metric records
+2025-09-13 12:50:37,267 - WARNING - Unknown metric file: bms1_p2_v3.csv
+2025-09-13 12:50:37,267 - WARNING - Unknown metric file: bms1_p3_v44.csv
+2025-09-13 12:50:37,267 - WARNING - Unknown metric file: bms1_p5_t30.csv
+2025-09-13 12:50:37,267 - WARNING - Unknown metric file: bms1_p1_t16.csv
+2025-09-13 12:50:37,267 - WARNING - Unknown metric file: bms1_p2_v26.csv
+2025-09-13 12:50:37,267 - WARNING - Unknown metric file: bms1_p4_t46.csv
+2025-09-13 12:50:37,267 - WARNING - Unknown metric file: bms1_p1_v29.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p4_t28.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p4_v13.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p2_t26.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p1_v6.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p4_v12.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p4_v39.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p4_v5.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p2_t49.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p2_t37.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p1_v28.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p1_t15.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p5_t9.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: fa5_SmokeFlag.csv
+2025-09-13 12:50:37,268 - WARNING - Unknown metric file: bms1_p3_t32.csv
+2025-09-13 12:50:37,268 - INFO - Processing pcs1_ia.csv -> ac_current_a (PCS)
+2025-09-13 12:50:54,757 - INFO - Database connection closed
+2025-09-13 13:05:26,405 - INFO - Connected to TimescaleDB at localhost:5432
+2025-09-13 13:05:26,405 - INFO - Setting up database schema...
+2025-09-13 13:05:26,422 - INFO - Database schema setup completed
+2025-09-13 13:05:26,423 - INFO - Processing system: BESS-001
+2025-09-13 13:05:26,426 - INFO - System BESS-001 registered
+2025-09-13 13:05:26,428 - INFO - Processing 597 CSV files for system BESS-001
+2025-09-13 13:05:26,428 - INFO - Processing bms1_p5_t37.csv -> pack5_cell3_temp (BMS)
+2025-09-13 13:09:26,203 - INFO - Parsed 673033 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t37.csv
+2025-09-13 13:10:41,527 - INFO - Bulk inserted 673033 metric records
+2025-09-13 13:10:41,528 - INFO - Processing bms1_p5_t5.csv -> pack5_cell5_temp (BMS)
+2025-09-13 13:14:31,506 - INFO - Parsed 673033 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t5.csv
+2025-09-13 13:15:29,836 - INFO - Bulk inserted 673033 metric records
+2025-09-13 13:15:29,836 - INFO - Processing pcs1_t_a.csv -> temp_ambient (PCS)
+2025-09-13 13:16:49,758 - INFO - Parsed 228202 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/pcs1_t_a.csv
+2025-09-13 13:17:13,188 - INFO - Bulk inserted 228202 metric records
+2025-09-13 13:17:13,188 - INFO - Processing bms1_p2_v3.csv -> pack2_cell3_voltage (BMS)
+2025-09-13 13:17:41,636 - INFO - Database connection closed
+2025-09-13 13:47:07,896 - INFO - Connected to TimescaleDB at localhost:5432
+2025-09-13 13:47:07,896 - INFO - Setting up database schema...
+2025-09-13 13:47:07,914 - INFO - Database schema setup completed
+2025-09-13 13:47:07,915 - INFO - Processing system: BESS-001
+2025-09-13 13:47:07,918 - INFO - System BESS-001 registered
+2025-09-13 13:47:07,921 - INFO - Processing 597 CSV files for system BESS-001
+2025-09-13 13:47:07,921 - INFO - Processing bms1_p5_t37.csv -> pack5_cell3_temp (BMS)
+2025-09-13 13:47:08,394 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t37.csv
+2025-09-13 13:47:25,228 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:47:25,228 - INFO - Processing bms1_p5_t5.csv -> pack5_cell5_temp (BMS)
+2025-09-13 13:47:25,770 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t5.csv
+2025-09-13 13:47:38,161 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:47:38,161 - INFO - Processing pcs1_t_a.csv -> temp_ambient (PCS)
+2025-09-13 13:47:38,363 - INFO - Parsed and resampled 45094 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/pcs1_t_a.csv
+2025-09-13 13:47:41,468 - INFO - Database connection closed
+2025-09-13 13:49:03,354 - INFO - Connected to TimescaleDB at localhost:5432
+2025-09-13 13:49:03,354 - INFO - Setting up database schema...
+2025-09-13 13:49:03,375 - INFO - Database schema setup completed
+2025-09-13 13:49:03,375 - INFO - Processing system: BESS-001
+2025-09-13 13:49:03,378 - INFO - System BESS-001 registered
+2025-09-13 13:49:03,382 - INFO - Processing 597 CSV files for system BESS-001
+2025-09-13 13:49:03,382 - INFO - Processing bms1_p5_t37.csv -> pack5_cell3_temp (BMS)
+2025-09-13 13:49:03,844 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t37.csv
+2025-09-13 13:49:20,494 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:49:20,495 - INFO - Processing bms1_p5_t5.csv -> pack5_cell5_temp (BMS)
+2025-09-13 13:49:21,046 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t5.csv
+2025-09-13 13:49:33,422 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:49:33,422 - INFO - Processing pcs1_t_a.csv -> temp_ambient (PCS)
+2025-09-13 13:49:33,626 - INFO - Parsed and resampled 45094 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/pcs1_t_a.csv
+2025-09-13 13:49:39,069 - INFO - Bulk inserted 45094 metric records
+2025-09-13 13:49:39,069 - INFO - Processing bms1_p2_v3.csv -> pack2_cell3_voltage (BMS)
+2025-09-13 13:49:40,104 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_v3.csv
+2025-09-13 13:50:01,350 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:50:01,351 - INFO - Processing bms1_p3_v44.csv -> pack3_cell4_voltage (BMS)
+2025-09-13 13:50:02,249 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_v44.csv
+2025-09-13 13:50:23,719 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:50:23,719 - INFO - Processing bms1_p5_t30.csv -> pack5_cell3_temp (BMS)
+2025-09-13 13:50:24,272 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t30.csv
+2025-09-13 13:50:38,882 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:50:38,882 - INFO - Processing bms1_p1_t16.csv -> pack1_cell1_temp (BMS)
+2025-09-13 13:50:39,421 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_t16.csv
+2025-09-13 13:50:56,204 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:50:56,204 - INFO - Processing bms1_p2_v26.csv -> pack2_cell2_voltage (BMS)
+2025-09-13 13:50:57,096 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_v26.csv
+2025-09-13 13:51:18,407 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:51:18,407 - INFO - Processing bms1_p4_t46.csv -> pack4_cell4_temp (BMS)
+2025-09-13 13:51:18,941 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p4_t46.csv
+2025-09-13 13:51:35,533 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:51:35,533 - INFO - Processing bms1_p1_v29.csv -> pack1_cell2_voltage (BMS)
+2025-09-13 13:51:36,475 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_v29.csv
+2025-09-13 13:51:57,553 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:51:57,553 - INFO - Processing bms1_p4_t28.csv -> pack4_cell2_temp (BMS)
+2025-09-13 13:51:58,026 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p4_t28.csv
+2025-09-13 13:52:14,747 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:52:14,747 - INFO - Processing bms1_p4_v13.csv -> pack4_cell1_voltage (BMS)
+2025-09-13 13:52:15,662 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p4_v13.csv
+2025-09-13 13:52:36,749 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:52:36,749 - INFO - Processing bms1_p2_t26.csv -> pack2_cell2_temp (BMS)
+2025-09-13 13:52:37,273 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_t26.csv
+2025-09-13 13:52:53,874 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:52:53,874 - INFO - Processing bms1_p1_v6.csv -> pack1_cell6_voltage (BMS)
+2025-09-13 13:52:54,790 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_v6.csv
+2025-09-13 13:53:16,011 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:53:16,011 - INFO - Processing bms1_p4_v12.csv -> pack4_cell1_voltage (BMS)
+2025-09-13 13:53:17,012 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p4_v12.csv
+2025-09-13 13:53:36,404 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:53:36,404 - INFO - Processing bms1_p4_v39.csv -> pack4_cell3_voltage (BMS)
+2025-09-13 13:53:37,321 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p4_v39.csv
+2025-09-13 13:53:59,233 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:53:59,233 - INFO - Processing bms1_p4_v5.csv -> pack4_cell5_voltage (BMS)
+2025-09-13 13:54:00,308 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p4_v5.csv
+2025-09-13 13:54:21,540 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:54:21,540 - INFO - Processing bms1_p2_t49.csv -> pack2_cell4_temp (BMS)
+2025-09-13 13:54:22,114 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_t49.csv
+2025-09-13 13:54:39,295 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:54:39,296 - INFO - Processing bms1_p2_t37.csv -> pack2_cell3_temp (BMS)
+2025-09-13 13:54:39,807 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_t37.csv
+2025-09-13 13:54:56,210 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:54:56,211 - INFO - Processing bms1_p1_v28.csv -> pack1_cell2_voltage (BMS)
+2025-09-13 13:54:57,176 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_v28.csv
+2025-09-13 13:55:16,363 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:55:16,363 - INFO - Processing bms1_p1_t15.csv -> pack1_cell1_temp (BMS)
+2025-09-13 13:55:16,955 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_t15.csv
+2025-09-13 13:55:32,029 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:55:32,029 - INFO - Processing bms1_p5_t9.csv -> pack5_cell9_temp (BMS)
+2025-09-13 13:55:32,532 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t9.csv
+2025-09-13 13:55:49,496 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:55:49,497 - WARNING - Unknown metric file: fa5_SmokeFlag.csv
+2025-09-13 13:55:49,497 - INFO - Processing bms1_p3_t32.csv -> pack3_cell3_temp (BMS)
+2025-09-13 13:55:50,017 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_t32.csv
+2025-09-13 13:56:06,805 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:56:06,805 - INFO - Processing pcs1_ia.csv -> ac_current_a (PCS)
+2025-09-13 13:56:07,485 - INFO - Parsed and resampled 177330 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/pcs1_ia.csv
+2025-09-13 13:56:29,990 - INFO - Bulk inserted 177330 metric records
+2025-09-13 13:56:29,991 - INFO - Processing bms1_p3_v45.csv -> pack3_cell4_voltage (BMS)
+2025-09-13 13:56:30,917 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_v45.csv
+2025-09-13 13:56:49,611 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:56:49,611 - INFO - Processing bms1_p4_t24.csv -> pack4_cell2_temp (BMS)
+2025-09-13 13:56:50,105 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p4_t24.csv
+2025-09-13 13:57:05,096 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:57:05,096 - INFO - Processing dh1_temp.csv -> temperature (ENV)
+2025-09-13 13:57:05,552 - INFO - Parsed and resampled 175948 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/dh1_temp.csv
+2025-09-13 13:57:27,381 - INFO - Bulk inserted 175948 metric records
+2025-09-13 13:57:27,381 - INFO - Processing bms1_p5_v13.csv -> pack5_cell1_voltage (BMS)
+2025-09-13 13:57:28,523 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_v13.csv
+2025-09-13 13:57:49,800 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:57:49,800 - INFO - Processing fa2_Co.csv -> fire_alarm_co_2 (SAFETY)
+2025-09-13 13:57:50,041 - INFO - Parsed and resampled 122686 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/fa2_Co.csv
+2025-09-13 13:58:05,818 - INFO - Bulk inserted 122686 metric records
+2025-09-13 13:58:05,818 - INFO - Processing pcs1_uca.csv -> ac_voltage_ca (PCS)
+2025-09-13 13:58:06,497 - INFO - Parsed and resampled 177330 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/pcs1_uca.csv
+2025-09-13 13:58:28,385 - INFO - Bulk inserted 177330 metric records
+2025-09-13 13:58:28,385 - INFO - Processing bms1_p3_v47.csv -> pack3_cell4_voltage (BMS)
+2025-09-13 13:58:29,312 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_v47.csv
+2025-09-13 13:58:47,883 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:58:47,884 - INFO - Processing bms1_p3_t12.csv -> pack3_cell1_temp (BMS)
+2025-09-13 13:58:48,409 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_t12.csv
+2025-09-13 13:59:05,574 - INFO - Bulk inserted 134895 metric records
+2025-09-13 13:59:05,574 - INFO - Processing bms1_p2_v16.csv -> pack2_cell1_voltage (BMS)
+2025-09-13 13:59:06,510 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_v16.csv
+2025-09-13 13:59:27,715 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:59:27,715 - INFO - Processing bms1_p1_v11.csv -> pack1_cell1_voltage (BMS)
+2025-09-13 13:59:28,782 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_v11.csv
+2025-09-13 13:59:50,218 - INFO - Bulk inserted 172625 metric records
+2025-09-13 13:59:50,218 - INFO - Processing bms1_p2_v51.csv -> pack2_cell5_voltage (BMS)
+2025-09-13 13:59:51,179 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_v51.csv
+2025-09-13 14:00:13,401 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:00:13,402 - INFO - Processing bms1_p3_v21.csv -> pack3_cell2_voltage (BMS)
+2025-09-13 14:00:14,358 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_v21.csv
+2025-09-13 14:00:36,435 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:00:36,435 - INFO - Processing bms1_p1_t33.csv -> pack1_cell3_temp (BMS)
+2025-09-13 14:00:36,945 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_t33.csv
+2025-09-13 14:00:53,488 - INFO - Bulk inserted 134895 metric records
+2025-09-13 14:00:53,488 - INFO - Processing bms1_p5_t40.csv -> pack5_cell4_temp (BMS)
+2025-09-13 14:00:53,960 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_t40.csv
+2025-09-13 14:01:11,163 - INFO - Bulk inserted 134895 metric records
+2025-09-13 14:01:11,163 - INFO - Processing bms1_p2_t30.csv -> pack2_cell3_temp (BMS)
+2025-09-13 14:01:11,664 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_t30.csv
+2025-09-13 14:01:26,969 - INFO - Bulk inserted 134895 metric records
+2025-09-13 14:01:26,969 - INFO - Processing bms1_p2_v6.csv -> pack2_cell6_voltage (BMS)
+2025-09-13 14:01:27,849 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_v6.csv
+2025-09-13 14:01:49,525 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:01:49,525 - INFO - Processing bms1_p2_t52.csv -> pack2_cell5_temp (BMS)
+2025-09-13 14:01:50,051 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_t52.csv
+2025-09-13 14:02:07,144 - INFO - Bulk inserted 134895 metric records
+2025-09-13 14:02:07,144 - INFO - Processing bms1_p1_t5.csv -> pack1_cell5_temp (BMS)
+2025-09-13 14:02:07,621 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_t5.csv
+2025-09-13 14:02:25,308 - INFO - Bulk inserted 134895 metric records
+2025-09-13 14:02:25,308 - INFO - Processing bms1_p3_v36.csv -> pack3_cell3_voltage (BMS)
+2025-09-13 14:02:26,203 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_v36.csv
+2025-09-13 14:02:47,773 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:02:47,774 - INFO - Processing bms1_p5_v23.csv -> pack5_cell2_voltage (BMS)
+2025-09-13 14:02:48,743 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_v23.csv
+2025-09-13 14:03:09,859 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:03:09,859 - WARNING - Unknown metric file: aux_m_i.csv
+2025-09-13 14:03:09,859 - INFO - Processing bms1_p2_v28.csv -> pack2_cell2_voltage (BMS)
+2025-09-13 14:03:10,739 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p2_v28.csv
+2025-09-13 14:03:29,707 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:03:29,708 - INFO - Processing bms1_p5_v40.csv -> pack5_cell4_voltage (BMS)
+2025-09-13 14:03:30,620 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_v40.csv
+2025-09-13 14:03:53,033 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:03:53,033 - INFO - Processing bms1_p1_t48.csv -> pack1_cell4_temp (BMS)
+2025-09-13 14:03:53,614 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_t48.csv
+2025-09-13 14:04:10,315 - INFO - Bulk inserted 134895 metric records
+2025-09-13 14:04:10,315 - INFO - Processing bms1_p3_v11.csv -> pack3_cell1_voltage (BMS)
+2025-09-13 14:04:11,223 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_v11.csv
+2025-09-13 14:04:34,291 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:04:34,292 - WARNING - Unknown metric file: fa4_T1.csv
+2025-09-13 14:04:34,292 - WARNING - Unknown metric file: fa1_ErrCode.csv
+2025-09-13 14:04:34,292 - INFO - Processing bms1_p5_v27.csv -> pack5_cell2_voltage (BMS)
+2025-09-13 14:04:35,241 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p5_v27.csv
+2025-09-13 14:04:54,256 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:04:54,256 - INFO - Processing bms1_p3_v3.csv -> pack3_cell3_voltage (BMS)
+2025-09-13 14:04:55,133 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_v3.csv
+2025-09-13 14:05:14,951 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:05:14,951 - INFO - Processing bms1_p1_t37.csv -> pack1_cell3_temp (BMS)
+2025-09-13 14:05:15,412 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p1_t37.csv
+2025-09-13 14:05:30,658 - INFO - Bulk inserted 134895 metric records
+2025-09-13 14:05:30,658 - INFO - Processing bms1_p3_v22.csv -> pack3_cell2_voltage (BMS)
+2025-09-13 14:05:31,479 - INFO - Parsed and resampled 172625 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_v22.csv
+2025-09-13 14:05:50,338 - INFO - Bulk inserted 172625 metric records
+2025-09-13 14:05:50,338 - INFO - Processing bms1_p3_t34.csv -> pack3_cell3_temp (BMS)
+2025-09-13 14:05:50,878 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p3_t34.csv
+2025-09-13 14:06:06,113 - INFO - Bulk inserted 134895 metric records
+2025-09-13 14:06:06,114 - WARNING - Unknown metric file: ac1_rtnwater_t.csv
+2025-09-13 14:06:06,114 - INFO - Processing bms1_p4_t11.csv -> pack4_cell1_temp (BMS)
+2025-09-13 14:06:06,634 - INFO - Parsed and resampled 134895 rows from ../energy_hackathon_data/BESS/ZHPESS232A230002/bms1_p4_t11.csv
+2025-09-13 14:06:23,410 - INFO - Database connection closed
+2025-09-13 14:57:42,199 - WARNING - error ignored terminating <psycopg.Pipeline [INERROR, pipeline=ON] (host=localhost user=postgres database=bess_db) at 0x7b0432208fb0>: canceling statement due to user request
+2025-09-13 15:13:14,107 - WARNING - Unknown metric file: fa5_SmokeFlag.csv
+2025-09-13 15:15:24,214 - WARNING - Unknown metric file: fa2_Co.csv
+2025-09-13 15:20:56,058 - WARNING - Unknown metric file: aux_m_i.csv
+2025-09-13 15:22:26,179 - WARNING - Unknown metric file: fa4_T1.csv
+2025-09-13 15:22:26,179 - WARNING - Unknown metric file: fa1_ErrCode.csv
+2025-09-13 15:24:08,139 - WARNING - Unknown metric file: ac1_rtnwater_t.csv
+2025-09-13 15:26:21,303 - WARNING - Unknown metric file: fa2_Level.csv
+2025-09-13 15:41:57,926 - WARNING - Unknown metric file: fa2_ErrCode.csv
+2025-09-13 15:45:47,733 - WARNING - Unknown metric file: fa1_Co.csv
+2025-09-13 16:22:44,146 - ERROR - Failed to connect to database: connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+2025-09-13 16:31:03,835 - WARNING - Unknown metric file: fa5_SmokeFlag.csv
+2025-09-13 16:33:15,406 - WARNING - Unknown metric file: fa2_Co.csv
+2025-09-13 16:40:12,778 - WARNING - Unknown metric file: fa4_T1.csv
+2025-09-13 16:40:12,778 - WARNING - Unknown metric file: fa1_ErrCode.csv
+2025-09-13 16:44:27,202 - WARNING - Unknown metric file: fa2_Level.csv
+2025-09-13 17:00:09,853 - WARNING - Unknown metric file: fa2_ErrCode.csv
+2025-09-13 17:03:41,236 - WARNING - Unknown metric file: fa1_Co.csv
+2025-09-13 17:04:30,248 - WARNING - Unknown metric file: fa5_T2.csv
+2025-09-13 17:08:00,962 - WARNING - Unknown metric file: fa3_T2.csv
+2025-09-13 17:09:17,547 - WARNING - Unknown metric file: fa3_Voc.csv
+2025-09-13 17:11:22,254 - WARNING - Unknown metric file: bms1_pos_ins.csv
+2025-09-13 17:13:45,132 - WARNING - Unknown metric file: fa1_Level.csv
+2025-09-13 17:29:47,962 - WARNING - Unknown metric file: fa4_SmokeFlag.csv
+2025-09-13 17:35:10,045 - WARNING - Unknown metric file: fa4_T2.csv
+2025-09-13 17:41:36,653 - WARNING - Unknown metric file: fa5_Co.csv
+2025-09-13 17:43:43,386 - WARNING - Unknown metric file: fa1_T1.csv
+2025-09-13 17:45:09,239 - WARNING - Unknown metric file: fa1_SmokeFlag.csv

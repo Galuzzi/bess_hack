@@ -1,0 +1,25 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg17        # adjust PG version if needed
+    container_name: timescaledb
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bess_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 9ddfbab1766f8b8f37a777cdb2c60fb2560ec2ba72860ec53429413ca7bc51e3
+    volumes:
+      - ./tsdata:/var/lib/postgresql/data   # persist data
+    ports:
+      - "5432:5432"    # map host port → container
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+    networks:
+      - tsnet
+
+volumes:
+  tsdata:
+
+networks:
+  tsnet:

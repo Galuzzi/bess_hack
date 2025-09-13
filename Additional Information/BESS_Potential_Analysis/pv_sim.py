@@ -1,5 +1,4 @@
 import pandas as pd
-import pvlib
 from pvlib.location import Location
 from pvlib.pvsystem import PVSystem
 from pvlib.modelchain import ModelChain
