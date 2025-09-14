@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -8,22 +8,42 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 export const ForecastingSection = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [images, setImages] = useState<{[key: string]: string}>({});
+
   const forecastImages = [
     {
       id: "energy-demand",
       title: "Energy Demand Forecast",
       description: "24-hour ahead prediction of energy demand patterns based on historical data, weather conditions, and grid requirements.",
-      apiEndpoint: "https://your-fastapi-backend.com/api/forecast/demand",
+      apiEndpoint: "http://localhost:8000/plot-soc", // <-- updated to local FastAPI endpoint
       placeholder: "Demand forecast chart will be displayed here"
     },
     {
       id: "price-optimization", 
       title: "Price Optimization Forecast",
       description: "Real-time energy price predictions and optimal charge/discharge timing recommendations for maximum cost efficiency.",
-      apiEndpoint: "https://your-fastapi-backend.com/api/forecast/pricing",
+      apiEndpoint: "http://localhost:8000/plot-revenue", // <-- updated to local FastAPI endpoint
       placeholder: "Price optimization visualization will be displayed here"
     }
   ];
+
+  useEffect(() => {
+    forecastImages.forEach(async (forecast) => {
+      const dateStr = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
+      const url = `${forecast.apiEndpoint}?date=${dateStr}`;
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const blob = await res.blob();
+          const imgUrl = URL.createObjectURL(blob);
+          setImages(prev => ({ ...prev, [forecast.id]: imgUrl }));
+        }
+      } catch (err) {
+        // handle error if needed
+      }
+    });
+  // re-fetch when selectedDate changes
+  }, [selectedDate]);
 
   return (
     <div className="p-6">
@@ -90,15 +110,23 @@ export const ForecastingSection = () => {
             {/* Image Display Area */}
             <div className="p-6">
               <div className="aspect-video w-full bg-muted rounded-lg border-2 border-dashed border-border flex flex-col items-center justify-center">
-                <div className="text-center text-muted-foreground space-y-2">
-                  <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
+                {images[forecast.id] ? (
+                  <img
+                    src={images[forecast.id]}
+                    alt={forecast.title}
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <div className="text-center text-muted-foreground space-y-2">
+                    <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                      <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                    </div>
+                    <div className="text-sm font-medium">FastAPI Image Placeholder</div>
+                    <div className="text-xs opacity-75">{forecast.placeholder}</div>
                   </div>
-                  <div className="text-sm font-medium">FastAPI Image Placeholder</div>
-                  <div className="text-xs opacity-75">{forecast.placeholder}</div>
-                </div>
+                )}
               </div>
             </div>
 
