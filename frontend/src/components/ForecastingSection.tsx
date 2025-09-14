@@ -46,7 +46,7 @@ export const ForecastingSection = () => {
   }, [selectedDate]);
 
   return (
-    <div className="p-6">
+    <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-foreground mb-2">Energy Forecasting</h2>
         <p className="text-muted-foreground">
@@ -94,7 +94,7 @@ export const ForecastingSection = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8">
         {forecastImages.map((forecast) => (
           <div key={forecast.id} className="bg-card rounded-lg border shadow-sm overflow-hidden">
             {/* Header */}
@@ -130,15 +130,7 @@ export const ForecastingSection = () => {
               </div>
             </div>
 
-            {/* API Information */}
-            <div className="px-6 pb-6">
-              <div className="bg-muted/30 rounded-lg p-4">
-                <div className="text-xs text-muted-foreground mb-1">API Endpoint:</div>
-                <code className="text-xs bg-background px-2 py-1 rounded border font-mono">
-                  {forecast.apiEndpoint}
-                </code>
-              </div>
-            </div>
+            
           </div>
         ))}
       </div>
