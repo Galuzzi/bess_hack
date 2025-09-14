@@ -177,7 +177,7 @@ def plot_soc_forecast(date: datetime, unit="MWh"):
     name = "State of Charge"
 
     # run this on the main repo level to work
-    market_price = pd.read_csv("forecast_soc/market_price.csv", parse_dates=True, index_col=0)
+    market_price = pd.read_csv("forecasting/market_price.csv", parse_dates=True, index_col=0)
     years = [2019, 2020, 2021, 2022, 2023, 2024]
     
     df, _ = simulate_myopic_optimization(
@@ -295,7 +295,7 @@ def plot_revenue_forecast(date: datetime, unit="€"):
     name = "Battery Revenue"
 
     # run this on the main repo level to work
-    market_price = pd.read_csv("forecast_soc/market_price.csv", parse_dates=True, index_col=0)
+    market_price = pd.read_csv("forecasting/market_price.csv", parse_dates=True, index_col=0)
     years = [2019, 2020, 2021, 2022, 2023, 2024]
 
     _, df = simulate_myopic_optimization(

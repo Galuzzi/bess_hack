@@ -15,14 +15,14 @@ export const ForecastingSection = () => {
       id: "energy-demand",
       title: "State of Charge Forecast",
       description: "A 7-day ahead forecast of the state of charge (SOC) using historical electricity market prices in Germany.",
-      apiEndpoint: "http://localhost:8000/plot-soc", // <-- updated to local FastAPI endpoint
+      apiEndpoint: "http://localhost:8001/plot-soc", // <-- updated to local FastAPI endpoint
       placeholder: "Demand forecast chart will be displayed here"
     },
     {
       id: "price-optimization", 
       title: "Past and Future Revenue Forecast",
       description: "Real-The revenue generated in the past month and the projected revenue for the upcoming month.",
-      apiEndpoint: "http://localhost:8000/plot-revenue", // <-- updated to local FastAPI endpoint
+      apiEndpoint: "http://localhost:8001/plot-revenue", // <-- updated to local FastAPI endpoint
       placeholder: "Price optimization visualization will be displayed here"
     }
   ];
@@ -32,7 +32,7 @@ export const ForecastingSection = () => {
       const dateStr = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
       const url = `${forecast.apiEndpoint}?date=${dateStr}`;
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, { method: "POST" });
         if (res.ok) {
           const blob = await res.blob();
           const imgUrl = URL.createObjectURL(blob);
