@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -8,22 +8,42 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 export const ForecastingSection = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [images, setImages] = useState<{[key: string]: string}>({});
+
   const forecastImages = [
     {
       id: "energy-demand",
-      title: "Energy Demand Forecast",
-      description: "24-hour ahead prediction of energy demand patterns based on historical data, weather conditions, and grid requirements.",
-      apiEndpoint: "https://your-fastapi-backend.com/api/forecast/demand",
+      title: "State of Charge Forecast",
+      description: "A 7-day ahead forecast of the state of charge (SOC) using historical electricity market prices in Germany.",
+      apiEndpoint: "http://localhost:8001/plot-soc", // <-- updated to local FastAPI endpoint
       placeholder: "Demand forecast chart will be displayed here"
     },
     {
       id: "price-optimization", 
-      title: "Price Optimization Forecast",
-      description: "Real-time energy price predictions and optimal charge/discharge timing recommendations for maximum cost efficiency.",
-      apiEndpoint: "https://your-fastapi-backend.com/api/forecast/pricing",
+      title: "Past and Future Revenue Forecast",
+      description: "Real-The revenue generated in the past month and the projected revenue for the upcoming month.",
+      apiEndpoint: "http://localhost:8001/plot-revenue", // <-- updated to local FastAPI endpoint
       placeholder: "Price optimization visualization will be displayed here"
     }
   ];
+
+  useEffect(() => {
+    forecastImages.forEach(async (forecast) => {
+      const dateStr = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
+      const url = `${forecast.apiEndpoint}?date=${dateStr}`;
+      try {
+        const res = await fetch(url, { method: "POST" });
+        if (res.ok) {
+          const blob = await res.blob();
+          const imgUrl = URL.createObjectURL(blob);
+          setImages(prev => ({ ...prev, [forecast.id]: imgUrl }));
+        }
+      } catch (err) {
+        // handle error if needed
+      }
+    });
+  // re-fetch when selectedDate changes
+  }, [selectedDate]);
 
   return (
     <div className="p-6">
@@ -90,15 +110,23 @@ export const ForecastingSection = () => {
             {/* Image Display Area */}
             <div className="p-6">
               <div className="aspect-video w-full bg-muted rounded-lg border-2 border-dashed border-border flex flex-col items-center justify-center">
-                <div className="text-center text-muted-foreground space-y-2">
-                  <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
+                {images[forecast.id] ? (
+                  <img
+                    src={images[forecast.id]}
+                    alt={forecast.title}
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <div className="text-center text-muted-foreground space-y-2">
+                    <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                      <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                    </div>
+                    <div className="text-sm font-medium">FastAPI Image Placeholder</div>
+                    <div className="text-xs opacity-75">{forecast.placeholder}</div>
                   </div>
-                  <div className="text-sm font-medium">FastAPI Image Placeholder</div>
-                  <div className="text-xs opacity-75">{forecast.placeholder}</div>
-                </div>
+                )}
               </div>
             </div>
 
@@ -125,10 +153,10 @@ export const ForecastingSection = () => {
             Implementation Notes
           </h4>
           <ul className="text-sm text-muted-foreground space-y-2">
-            <li>• Replace placeholder divs with actual image elements</li>
-            <li>• Connect to your FastAPI backend endpoints</li>
-            <li>• Add loading states and error handling</li>
-            <li>• Consider implementing auto-refresh intervals</li>
+            <li>• The forecast is based on Germany’s electricity market prices starting from 2019.</li>
+            <li>• Using PyPSA, the optimal battery SOC is modeled to maximize profit from market price fluctuations.</li>
+            <li>• Revenue is calculated as the difference between discharging profits and charging costs.</li>
+            <li>• Data source: https://www.smard.de/home/downloadcenter/download-marktdaten/</li>
           </ul>
         </div>
 
@@ -140,10 +168,10 @@ export const ForecastingSection = () => {
             Forecast Features
           </h4>
           <ul className="text-sm text-muted-foreground space-y-2">
-            <li>• 24-hour energy demand predictions</li>
-            <li>• Weather-integrated forecasting</li>
-            <li>• Grid price optimization</li>
-            <li>• Automated charging schedules</li>
+            <li>• Set the current date, and a Python script will forecast the SOC and project revenue.</li>
+            <li>• The models incorporate 2025 market prices up to the current day-ahead data.</li>
+            <li>• The script performs stochastic optimization of future scenarios using historical market prices from 2019 to 2024.</li>
+            <li>• The entire process completes in under one minute.</li>
           </ul>
         </div>
       </div>
