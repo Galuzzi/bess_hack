@@ -13,15 +13,15 @@ export const ForecastingSection = () => {
   const forecastImages = [
     {
       id: "energy-demand",
-      title: "Energy Demand Forecast",
-      description: "24-hour ahead prediction of energy demand patterns based on historical data, weather conditions, and grid requirements.",
+      title: "State of Charge Forecast",
+      description: "A 7-day ahead forecast of the state of charge (SOC) using historical electricity market prices in Germany.",
       apiEndpoint: "http://localhost:8000/plot-soc", // <-- updated to local FastAPI endpoint
       placeholder: "Demand forecast chart will be displayed here"
     },
     {
       id: "price-optimization", 
-      title: "Price Optimization Forecast",
-      description: "Real-time energy price predictions and optimal charge/discharge timing recommendations for maximum cost efficiency.",
+      title: "Past and Future Revenue Forecast",
+      description: "Real-The revenue generated in the past month and the projected revenue for the upcoming month.",
       apiEndpoint: "http://localhost:8000/plot-revenue", // <-- updated to local FastAPI endpoint
       placeholder: "Price optimization visualization will be displayed here"
     }
@@ -153,10 +153,10 @@ export const ForecastingSection = () => {
             Implementation Notes
           </h4>
           <ul className="text-sm text-muted-foreground space-y-2">
-            <li>• Replace placeholder divs with actual image elements</li>
-            <li>• Connect to your FastAPI backend endpoints</li>
-            <li>• Add loading states and error handling</li>
-            <li>• Consider implementing auto-refresh intervals</li>
+            <li>• The forecast is based on Germany’s electricity market prices starting from 2019.</li>
+            <li>• Using PyPSA, the optimal battery SOC is modeled to maximize profit from market price fluctuations.</li>
+            <li>• Revenue is calculated as the difference between discharging profits and charging costs.</li>
+            <li>• Data source: https://www.smard.de/home/downloadcenter/download-marktdaten/</li>
           </ul>
         </div>
 
@@ -168,10 +168,10 @@ export const ForecastingSection = () => {
             Forecast Features
           </h4>
           <ul className="text-sm text-muted-foreground space-y-2">
-            <li>• 24-hour energy demand predictions</li>
-            <li>• Weather-integrated forecasting</li>
-            <li>• Grid price optimization</li>
-            <li>• Automated charging schedules</li>
+            <li>• Set the current date, and a Python script will forecast the SOC and project revenue.</li>
+            <li>• The models incorporate 2025 market prices up to the current day-ahead data.</li>
+            <li>• The script performs stochastic optimization of future scenarios using historical market prices from 2019 to 2024.</li>
+            <li>• The entire process completes in under one minute.</li>
           </ul>
         </div>
       </div>
